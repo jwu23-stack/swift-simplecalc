@@ -1,11 +1,54 @@
 print("Welcome to the UW Calculator Playground")
 
 func calculate(_ args: [String]) -> Int {
-    return -1
+    if args.isEmpty {
+        return -1
+    }
+    if args.count == 1 {
+        return 0
+    }
+    let function : String = args.last!
+    switch function {
+    case "count":
+        return args.count - 1
+    case "avg":
+        var total = 0
+        for num in 0...(args.count - 1) {
+            total += Int(args[num]) ?? 0
+        }
+        return total / (args.count - 1)
+    case "fact":
+        if Int(args[0])! == 0 {
+            return 1
+        } else {
+            var total = 1
+            for num in 1...Int(args[0])! {
+                total *= num
+            }
+            return total
+        }
+    default:
+        let operand = args[1]
+        switch operand {
+        case "+":
+            return Int(args[0])! + Int(args[2])!
+        case "-":
+            return Int(args[0])! - Int(args[2])!
+        case "*":
+            return Int(args[0])! * Int(args[2])!
+        case "/":
+            return Int(args[0])! / Int(args[2])!
+        case "%":
+            return Int(args[0])! % Int(args[2])!
+        default:
+            return -1
+        }
+    }
 }
 
+/* Solved issue of converting [String.SubSequence] to [String] with String.init function */
 func calculate(_ arg: String) -> Int {
-    return -1
+    return calculate(arg.split(separator: " ").map(String.init))
 }
 
 // -------------------------------------------
@@ -53,7 +96,7 @@ calculate("5 fact") == 120
 
 // Implement calculate([String]) and calculate(String)
 // to handle negative numbers
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -68,16 +111,58 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
+
  
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
-/*
+
 func calculate(_ args: [String]) -> Double {
-    return -1.0
+    if args.isEmpty {
+        return -1
+    }
+    if args.count == 1 {
+        return 0
+    }
+    let function : String = args.last!
+    switch function {
+    case "count":
+        return Double(args.count - 1)
+    case "avg":
+        var total = 0.0
+        for num in 0...(args.count - 1) {
+            total += Double(args[num]) ?? 0
+        }
+        return total / Double(args.count - 1)
+    case "fact":
+        if Double(args[0])! == 0.0 {
+            return 1.0
+        } else {
+            var total = 1.0
+            for num in 1...Int(args[0])! {
+                total *= Double(num)
+            }
+            return total
+        }
+    default:
+        let operand = args[1]
+        switch operand {
+        case "+":
+            return Double(args[0])! + Double(args[2])!
+        case "-":
+            return Double(args[0])! - Double(args[2])!
+        case "*":
+            return Double(args[0])! * Double(args[2])!
+        case "/":
+            return Double(args[0])! / Double(args[2])!
+        case "%":
+            return Double(args[0])!.truncatingRemainder(dividingBy: Double(args[2])!)
+        default:
+            return -1
+        }
+    }
 }
 func calculate(_ arg: String) -> Double {
-    return -1.0
+    return calculate(arg.split(separator: " ").map(String.init))
 }
 
 calculate(["2.0", "+", "2.0"]) == 4.0
@@ -86,5 +171,5 @@ calculate(["12.0", "-", "12.0"]) == 0.0
 calculate(["2.5", "*", "2.5"]) == 6.25
 calculate(["2.0", "/", "2.0"]) == 1.0
 calculate(["2.0", "%", "2.0"]) == 0.0
-calculate("1.0 2.0 3.0 4.0 5.0 count") == 5
-*/
+calculate("1.0 2.0 3.0 4.0 5.0 count") == 5.0
+
